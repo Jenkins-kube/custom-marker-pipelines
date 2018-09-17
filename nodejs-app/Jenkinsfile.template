@@ -85,30 +85,32 @@ spec:
         }
       }    
     }
-      stage('Build and Push Image') {
-         when {
-            beforeAgent true
-            branch 'master'
-         }
-         steps {
-            echo "TODO - build and push image"
-         }
+   
+    stage('Build and Push Image') {
+      when {
+        beforeAgent true
+        branch 'master'
       }
-      stage('Deploy') {
+      steps {
+        dockerBuildPush(env.IMAGE_NAME, env.IMAGE_TAG) {
+          unstash 'app'
+        }
+      }
+    }
+    stage('Deploy') {
       when {
         beforeAgent true
         branch 'master'
       }
       options {
-        timeout(time: 300, unit: 'SECONDS') 
+        timeout(time: 60, unit: 'SECONDS') 
       }
       input {
         message "Should we deploy?"
         submitterParameter "APPROVER"
       }
       steps {
-        echo "Continuing with deployment - approved by ${APPROVER}"
-        unstash 'app'
+        kubeDeploy(env.IMAGE_NAME, env.IMAGE_TAG)
       }
     }
     
