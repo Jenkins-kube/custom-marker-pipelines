@@ -45,6 +45,7 @@ pipeline {
       }
       input {
         message "Should we deploy?"
+        submitter "anu"
         submitterParameter "APPROVER"
       }
       steps {
