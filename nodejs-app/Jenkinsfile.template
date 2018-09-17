@@ -1,4 +1,4 @@
-library 'Jenkins-Kube'
+library 'Jenkins-kube'
 pipeline {
    agent any
    options { 
