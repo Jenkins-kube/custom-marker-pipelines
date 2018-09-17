@@ -17,6 +17,11 @@ pipeline {
              container('nodejs') {
                echo 'Hello World!'   
                sh 'node -v'
+               }
+             }
+            post {
+             success {
+               stash name: 'app', includes: '*.js, public/**, views/*, Dockerfile'
             }
          }
       }
@@ -43,6 +48,7 @@ pipeline {
       }
       steps {
         echo "Continuing with deployment - approved by ${APPROVER}"
+        unstash 'app'
       }
     }
     
