@@ -10,13 +10,22 @@ pipeline {
             sh 'java -version'
          }
       }
-       stage('Test') {
+      stage('Test') {
            steps {
               sh 'java -version' 
              container('nodejs') {
                echo 'Hello World!'   
                sh 'node -v'
             }
+         }
+      }
+      stage('Build and Push Image') {
+         when {
+            beforeAgent true
+            branch 'master'
+         }
+         steps {
+            echo "TODO - build and push image"
          }
       }
   }
