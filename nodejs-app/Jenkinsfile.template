@@ -1,8 +1,9 @@
 pipeline {
    agent any
    options { 
-    buildDiscarder(logRotator(numToKeepStr: '2'))
+    buildDiscarder(logRotator(numToKeepStr: '10'))
     skipDefaultCheckout true
+    preserveStashes(buildCount: 2)
    }
    stages {
       stage('Say Hello') {
